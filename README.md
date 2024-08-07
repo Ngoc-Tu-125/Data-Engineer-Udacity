@@ -27,8 +27,6 @@ The images of inspections in the images folder!
 - Data Target (S3 Bucket) - Choose option "Create a table in the Data Catalog and on subsequent runs, update the schema and add new partitions" -> Table name: custumer_trusted
 - Download the script after run successfully
 
-Testing:
-    SELECT * FROM my_datalake_database.custumer_trusted LIMIT 10;
 
 ### Step 5: Create AWS Glue Jobs for Accelerometer Trusted Zones
 - Create Visual ETL and config with your IAM and your database.
@@ -37,18 +35,14 @@ Testing:
 - Data Target (S3 Bucket) - accelerometer_trusted table
 - Download the script after run successfully
 
-Testing:
-    SELECT * FROM my_datalake_database.accelerometer_trusted LIMIT 10;
 
 ### Step 6: Create AWS Glue Jobs for Customer Curated Zones
 - Create Visual ETL and config with your IAM and your database.
-- Data source: Database: accelerometer_landing and custumer_trusted
-- Join condition: accelerometer_landing.user == custumer_trusted.email
+- Data source: Database: accelerometer_trusted and custumer_trusted
+- Join condition: accelerometer_trusted.user == custumer_trusted.email
 - Data Target (S3 Bucket) - custumer_curated table
 - Download the script after run successfully
 
-Testing:
-    SELECT * FROM my_datalake_database.custumer_curated LIMIT 10;
 
 ### Step 7: Create AWS Glue Jobs for Step Trainer Trusted Zones
 - Create Visual ETL and config with your IAM and your database.
@@ -57,5 +51,9 @@ Testing:
 - Data Target (S3 Bucket) - step_trainer_trusted table
 - Download the script after run successfully
 
-Testing:
-    SELECT * FROM my_datalake_database.step_trainer_trusted LIMIT 10;
+### Step 7: Create AWS Glue Jobs for Machine Learning Curated
+- Create Visual ETL and config with your IAM and your database.
+- Data source: Database: step_trainer_trusted and accelerometer_trusted
+- Join condition: step_trainer_trusted.sensorReadingTime = accelerometer_trusted.timestamp
+- Data Target (S3 Bucket) - machine_learning_curated table
+- Download the script after run successfully
